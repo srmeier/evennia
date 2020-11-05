@@ -34,7 +34,7 @@ LABEL maintainer="www.evennia.com"
 
 # install compilation environment
 RUN apk update && apk add bash gcc jpeg-dev musl-dev procps \
-libffi-dev openssl-dev zlib-dev gettext
+libffi-dev openssl-dev zlib-dev gettext postgresql-dev
 
 # add the files required for pip installation
 COPY ./setup.py /usr/src/evennia/
@@ -44,7 +44,7 @@ COPY ./bin /usr/src/evennia/bin/
 
 # install dependencies
 RUN pip install --upgrade pip && pip install -e /usr/src/evennia --trusted-host pypi.python.org
-RUN pip install cryptography pyasn1 service_identity
+RUN pip install cryptography pyasn1 service_identity psycopg2-binary
 
 # add the project source; this should always be done after all
 # expensive operations have completed to avoid prematurely

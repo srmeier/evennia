@@ -784,6 +784,8 @@ def wait_for_status(
                     retries - 1,
                 )
 
+    from time import sleep
+    sleep(3)
     return send_instruction(PSTATUS, None, _callback, _errback)
 
 

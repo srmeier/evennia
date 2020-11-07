@@ -1423,7 +1423,12 @@ def create_superuser():
         "\nCreate a superuser below. The superuser is Account #1, the 'owner' "
         "account of the server. Email is optional and can be empty.\n"
     )
-    django.core.management.call_command("createsuperuser", interactive=True)
+    from os import environ
+    username = environ["DJANGO_SUPERUSER_USERNAME"]
+    email = environ["DJANGO_SUPERUSER_EMAIL"]
+    django.core.management.call_command("createsuperuser", "--noinput",
+                                        "--username=" + username,
+                                        "--email=" + email, interactive=False)
 
 
 def check_database(always_return=False):

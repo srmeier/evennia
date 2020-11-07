@@ -1425,10 +1425,15 @@ def create_superuser():
     )
     from os import environ
     username = environ["DJANGO_SUPERUSER_USERNAME"]
+    password = environ["DJANGO_SUPERUSER_PASSWORD"]
     email = environ["DJANGO_SUPERUSER_EMAIL"]
     django.core.management.call_command("createsuperuser", "--noinput",
                                         "--username=" + username,
                                         "--email=" + email, interactive=False)
+    from evennia.accounts.models import AccountDB
+    u = AccountDB.objects.get(username=username)
+    u.set_password(password)
+    u.save()
 
 
 def check_database(always_return=False):
